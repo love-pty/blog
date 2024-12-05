@@ -1,6 +1,5 @@
 ---
-description: Element-UI默认不支持宽度自适应，所以需要写一个函数来实现自适应
-本质是通过一个函数来计算当前列最宽数据的宽度然后将计算结果赋值给`width`或`min-width`
+description: Element-UI默认不支持宽度自适应，所以需要写一个函数来实现自适应。本质是通过一个函数来计算当前列最宽数据的宽度然后将计算结果赋值给`width`或`min-width`
 ---
 # Element-UI table自适应列宽
 
