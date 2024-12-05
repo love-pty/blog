@@ -51,7 +51,7 @@ const getActualWidthOfChars = (text:any, options:any = {}) => {
     }
 }
 ```
-
+> Element-Plus 已经支持自适应列宽，不需要自己写函数了。
 
 `getActualWidthOfChars`函数使用`canvas`实现文本宽度，具体请参考一位大佬的掘金文章[面试官：你是如何获取文本宽度的？]: https://juejin.cn/post/7091990279565082655
 
