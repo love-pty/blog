@@ -52,7 +52,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        link: 'https://github.com/love-pty/love-pty.github.io'
+        link: 'https://github.com/love-pty/blog'
       }
     ]
   }
