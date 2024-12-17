@@ -1,4 +1,4 @@
-# 前端知识点合集
+# 前端知识点合集（持续跟新中）
 
 # 1. 网络与浏览器
 
@@ -280,3 +280,9 @@ JS是一门单线程的语言，事件循环是JS的异步执行机制。时间�
 ## 3.11 typeof,instantof是什么？
 - typeof是一个运算符，返回值是一个字符串，用来说明变量的数据类型，可以用此来判断number,string,object,boolean,function,undefined,symbol这七种类型。但是对于对象、数组、null返回值是object。可以通过Array.isArray()，instanceof，Object.prototype.tostring().call()
 - instanceof运算符用于指示一个变量是否属于某个对象的实例。返回值为布尔值。instanceof主要的实现原理就是只要右边变量的prototype在左边变量的原型链上即可。
+
+## 3.12 for in 和 for of 的区别？
+- for in 循环返回的值都是对象的键值对（数组及下标），遍历顺序有可能按照是技术组的内部顺序，使用for in 会遍历数组或对象所有的可枚举属性，包括继承属属性和原型。所以不适合遍历数组，更适合遍历对象。
+- for of 循环用来获取一对键值对中的值，但for of循环内部调用的是数据结构的迭代器。因此不能遍历对象，因为普通对象没有迭代器，可以使用的范围包括数组、Set和Map结构、某些类似数组的对象（比如arguments对象、DOM NodeList对象）、Generator对象，以及字符串。相对于forEach而言可以与break、continue和return配合使用，可以随时退出循环。
+
+## 3.13 JS的array的方法有哪些？
