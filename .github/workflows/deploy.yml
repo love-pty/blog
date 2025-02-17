@@ -84,29 +84,39 @@ jobs:
         run: |
           pnpm install cos-nodejs-sdk-v5
           node <<EOF
+          const fs = require('fs');
+          const path = require('path');
           const COS = require('cos-nodejs-sdk-v5');
-          const { rmSync } = require('fs');
-          const cos = new COS({
-            SecretId: process.env.COS_SECRET_ID,
-            SecretKey: process.env.COS_SECRET_KEY
-          });
-
-          // 上传dist目录
-          cos.uploadDir({
-            Bucket: process.env.COS_BUCKET,
-            Region: process.env.COS_REGION,
-            Dir: '../../docs/.vitepress/dist',
-            SliceSize: 1024 * 1024,
-            onFileFinish: (err, data) => {
-              if (err) {
-                console.error('Upload failed:', data.Key);
-                process.exit(1);
+          const upload = ({ dirURL, prefix = '', secretId, secretKey, bucket, region }) => {
+              const cos = new COS({ SecretId: secretId, SecretKey: secretKey });
+              recursion({ sourseDirURL: dirURL, dirURL, prefix, bucket, region, cos })
+          }
+          const recursion = ({ sourseDirURL, dirURL, prefix = '', bucket, region, cos }) => {
+              const files = fs.readdirSync(dirURL);
+              for (const file of files) {
+                  const fullPath = path.join(dirURL, file);
+                  const stat = fs.statSync(fullPath);
+                  if (stat.isDirectory()) {
+                      recursion({ sourseDirURL, dirURL: fullPath, prefix, bucket, region, cos })
+                  } else {
+                      uploadFile(path.join(prefix, fullPath.replace(sourseDirURL, '')), fullPath, bucket, region, cos);
+                  }
               }
-              console.log('Uploaded:', data.Key);
-            }
-          }, (err) => {
-            if (err) throw err;
-            // 上传完成后删除本地文件（可选）
-            // rmSync('../../docs/.vitepress/dist', { recursive: true, force: true });
-          });
+              !files.length && uploadDir(path.join(prefix, dirURL.replace(sourseDirURL, '')), bucket, region, cos)
+          }
+          const uploadFile = (key, filePath, bucket, region, cos) => {
+              if (!filePath.length) return
+              cos.uploadFile({ Bucket: bucket, Region: region, Key: key, FilePath: filePath });
+          }
+          const uploadDir = (dirURL, bucket, region, cos) => {
+              if (!dirURL.length) return
+              cos.putObject({ Bucket: bucket, Region: region, Key: dirURL + '/', Body: '' });
+          }
+          upload({
+              dirURL: path.resolve(__dirname, '../docs/.vitepress/dist'),
+              secretId: '${process.env.COS_SECRET_ID}',
+              secretKey: '${process.env.COS_SECRET_KEY}',
+              bucket: '${process.env.COS_BUCKET}',
+              region: '${process.env.COS_REGION}'
+          })
           EOF
