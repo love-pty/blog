@@ -79,8 +79,8 @@ jobs:
         env:
           COS_SECRET_ID: ${{ secrets.SECRETID }}
           COS_SECRET_KEY: ${{ secrets.SECRETKEY }}
-          COS_BUCKET: your-bucket-name
-          COS_REGION: ap-shanghai
+          COS_BUCKET: pangtouyu-1320549472
+          COS_REGION: ap-nanjing
         run: |
           npm install cos-nodejs-sdk-v5
           node <<EOF
