@@ -82,20 +82,19 @@ jobs:
           COS_BUCKET: pangtouyu-1320549472
           COS_REGION: ap-nanjing
         run: |
-          #!/bin/bash
           pnpm install cos-nodejs-sdk-v5
           node <<EOF
           const COS = require('cos-nodejs-sdk-v5');
           const { rmSync } = require('fs');
           const cos = new COS({
-            SecretId: '${process.env.COS_SECRET_ID}',
-            SecretKey: '${process.env.COS_SECRET_KEY}'
+            SecretId: process.env.COS_SECRET_ID,
+            SecretKey: process.env.COS_SECRET_KEY
           });
 
           // 上传dist目录
           cos.uploadDir({
-            Bucket: '${process.env.COS_BUCKET}',
-            Region: '${process.env.COS_REGION}',
+            Bucket: process.env.COS_BUCKET,
+            Region: process.env.COS_REGION,
             Dir: '../../docs/.vitepress/dist',
             SliceSize: 1024 * 1024,
             onFileFinish: (err, data) => {
