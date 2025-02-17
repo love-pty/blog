@@ -2,7 +2,7 @@
 layout: home
 # 首页部分元素定制
 blog:
- name: '博客'
+ name: 'pangtouyu的博客'
  # motto: 简约风的 Vitepress 博客主题
  inspiring:
   - 千万不要因为走得太久，而忘记了我们为什么出发
