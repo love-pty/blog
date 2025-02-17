@@ -55,5 +55,14 @@ export default defineConfig({
         link: 'https://github.com/love-pty/blog'
       }
     ]
+  },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern'
+        }
+      }
+    }
   }
 })
