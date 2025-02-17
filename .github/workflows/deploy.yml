@@ -82,7 +82,7 @@ jobs:
           COS_BUCKET: pangtouyu-1320549472
           COS_REGION: ap-nanjing
         run: |
-          npm install cos-nodejs-sdk-v5
+          pnpm install cos-nodejs-sdk-v5
           node <<EOF
           const COS = require('cos-nodejs-sdk-v5');
           const { rmSync } = require('fs');
